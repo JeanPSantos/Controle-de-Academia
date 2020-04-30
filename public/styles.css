@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 :root {
 	--color-rocketseat: #7159c1;
@@ -137,7 +137,7 @@ header {
 
 /*---------- FORM ------------*/
 
-input {
+input, select {
 	width: 100%;
 	outline: none;
 	color: #555;
@@ -224,7 +224,8 @@ tbody tr td:first-child span {
 	border: 2px solid white;
 }
 
-tbody tr td:last-child a {
+tbody tr td:last-child a,
+.table-container a {
 	background-color: var(--color-rocketseat);
 	padding: 8px 16px;
 	text-decoration: none;
@@ -237,4 +238,9 @@ tbody tr td:last-child a {
 .table-container thead tr th:last-child,
 td:last-child {
 	text-align: center;
+}
+
+.table-container a {
+	margin-bottom: 16px;
+	display: inline-block;
 }

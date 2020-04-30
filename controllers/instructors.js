@@ -1,36 +1,19 @@
 const fs = require('fs');
 const Intl = require('intl');
-const data = require('./data.json');
-const { age, date } = require('./utils');
-
+const data = require('../data.json');
+const { age, date } = require('../utils');
 
 // index
 exports.index = function(req, res) {
 	return res.render('instructors/index', {instructors : data.instructors });
 }
 
-//show
-exports.show = function(req, res) {
-	const { id } = req.params;
-	const foundInstructor = data.instructors.find(function(instructor){
-		return instructor.id == id;
-	});
-
-	if (!foundInstructor) {
-		return res.send('Instrutor não encontrado!')
-	}
-
-	const instructor = {
-		...foundInstructor,
-		age: age(foundInstructor.birth),
-		services: foundInstructor.services.split(','),
-		created_at: new Intl.DateTimeFormat('pt-BR').format(foundInstructor.created_at),		
-	}
-
-	return res.render('instructors/show', { instructor: instructor });
+// create
+exports.create = function(req, res) {
+	return res.render('instructors/create');
 };
 
-// create
+//cadastro
 exports.post = function(req, res) {
 	const keys = Object.keys(req.body);
 
@@ -63,7 +46,27 @@ exports.post = function(req, res) {
 
 		return res.redirect('/instructors');
 	});
-	//return res.send(req.body);
+};
+
+//show
+exports.show = function(req, res) {
+	const { id } = req.params;
+	const foundInstructor = data.instructors.find(function(instructor){
+		return instructor.id == id;
+	});
+
+	if (!foundInstructor) {
+		return res.send('Instrutor não encontrado!')
+	}
+
+	const instructor = {
+		...foundInstructor,
+		age: age(foundInstructor.birth),
+		services: foundInstructor.services.split(','),
+		created_at: new Intl.DateTimeFormat('pt-BR').format(foundInstructor.created_at),		
+	}
+
+	return res.render('instructors/show', { instructor: instructor });
 };
 
 // edit (Carrega os dados da página para serem editados)
@@ -79,7 +82,7 @@ exports.edit = function(req, res) {
 
 	const instructor = {
 		...foundInstructor,
-		birth: date(foundInstructor.birth),
+		birth: date(foundInstructor.birth).iso,
 	}
 	
 	return res.render('instructors/edit', { instructor : instructor});
